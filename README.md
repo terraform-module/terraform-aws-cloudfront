@@ -42,7 +42,16 @@ Terraform Module that implements a CloudFront Distribution (CDN) for a custom or
 IMPORTANT: The master branch is used in source just as an example. In your code, do not pin to master because there may be breaking changes between releases. Instead pin to the release tag (e.g. ?ref=tags/x.y.z) of one of our [latest releases](https://github.com/terraform-module/terraform-aws-cloudfront/releases).
 
 ```hcl
+module cloudfront {
+  source  = "terraform-module/cloudfront/aws"
+  version = "0.12.2"
 
+  tags = { Environment = "dev" }
+  comment = "dev"
+  dynamic_s3_origin_config = [{
+    domain_name = "media-assets.s3.us-west-2.amazonaws.com"
+  }]
+}
 ```
 
 ## Assumptions
@@ -97,10 +106,10 @@ IMPORTANT: The master branch is used in source just as an example. In your code,
 
 <!-- START makefile-doc -->
 ```
-$ make help 
+$ make help
 hooks                          Commit hooks setup
 validate                       Validate with pre-commit hooks
-changelog                      Update changelog 
+changelog                      Update changelog
 ```
 <!-- END makefile-doc -->
 
