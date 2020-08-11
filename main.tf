@@ -12,6 +12,7 @@ resource "aws_cloudfront_distribution" "this" {
   enabled = var.enabled
 
   dynamic "origin" {
+
     for_each = [for i in var.dynamic_s3_origin_config : {
       name          = i.domain_name
       id            = lookup(i, "origin_id", local.origin_id)
@@ -68,13 +69,32 @@ resource "aws_cloudfront_distribution" "this" {
 
   price_class = var.price_class
 
-  viewer_certificate {
-    cloudfront_default_certificate = true
+  dynamic "viewer_certificate" {
+
+    iterator = i
+    for_each = var.viewer_certificate == null ? [{
+      cloudfront_default_certificate = true
+      minimum_protocol_version       = "TLSv1"
+    }] : [var.viewer_certificate]
+
+    content {
+      cloudfront_default_certificate = i.value.cloudfront_default_certificate
+      minimum_protocol_version       = i.value.minimum_protocol_version
+      ssl_support_method             = lookup(i, "ssl_support_method", null)
+      acm_certificate_arn            = lookup(i, "acm_certificate_arn", null)
+      iam_certificate_id             = lookup(i, "iam_certificate_id", null)
+    }
   }
 
   restrictions {
-    geo_restriction {
-      restriction_type = "none"
+    dynamic "geo_restriction" {
+      iterator = e
+      for_each = var.geo_restrictions == null ? [] : var.geo_restrictions
+
+      content {
+        locations        = e.value.locations
+        restriction_type = e.value.restriction_type
+      }
     }
   }
 
