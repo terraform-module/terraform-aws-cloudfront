@@ -65,24 +65,26 @@ module cloudfront {
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.12 |
+| terraform | >= 0.12.6, < 0.14 |
+| aws | >= 2.67, < 4.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | n/a |
+| aws | >= 2.67, < 4.0 |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | comment | Any comments you want to include about the distribution. | `string` | `"Managed by Terraform"` | no |
-| dynamic\_s3\_origin\_config | Configuration for the s3 origin config to be used in dynamic block. | `list(map(string))` | `[]` | no |
+| default\_cache\_behavior | Default Cache Behviors to be used in dynamic block. | `any` | <pre>{<br>  "allowed_methods": [<br>    "GET",<br>    "HEAD",<br>    "OPTIONS"<br>  ],<br>  "default_ttl": 3600,<br>  "max_ttl": 86400,<br>  "min_ttl": 0<br>}</pre> | no |
 | enabled | Set to false to prevent the module from creating any resources. | `bool` | `"true"` | no |
 | geo\_restrictions | The method that you want to use to restrict distribution of your content by country. | <pre>list(object({<br>    locations        = list(string)<br>    restriction_type = string<br>  }))</pre> | <pre>[<br>  {<br>    "locations": [],<br>    "restriction_type": "none"<br>  }<br>]</pre> | no |
 | is\_ipv6\_enabled | State of CloudFront IPv6 | `bool` | `"false"` | no |
 | price\_class | The price class for this distribution. Values: `PriceClass_All`, `PriceClass_200`, `PriceClass_100`. | `string` | `"PriceClass_100"` | no |
+| s3\_origin\_config | Configuration for the s3 origin config to be used in dynamic block. | `list(map(string))` | `[]` | no |
 | tags | A mapping of tags to assign to the object. | `map` | `{}` | no |
 | viewer\_certificate | The SSL configuration for this distribution (maximum one). | <pre>object({<br>    cloudfront_default_certificate = bool<br>    minimum_protocol_version       = string<br>    ssl_support_method             = string<br>    acm_certificate_arn            = string<br>    iam_certificate_id             = string<br>  })</pre> | <pre>{<br>  "acm_certificate_arn": null,<br>  "cloudfront_default_certificate": true,<br>  "iam_certificate_id": null,<br>  "minimum_protocol_version": "TLSv1",<br>  "ssl_support_method": null<br>}</pre> | no |
 
@@ -106,10 +108,10 @@ module cloudfront {
 
 <!-- START makefile-doc -->
 ```
-$ make help
+$ make help 
 hooks                          Commit hooks setup
 validate                       Validate with pre-commit hooks
-changelog                      Update changelog
+changelog                      Update changelog 
 ```
 <!-- END makefile-doc -->
 

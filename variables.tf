@@ -16,7 +16,7 @@ variable "comment" {
   type        = string
 }
 
-variable "dynamic_s3_origin_config" {
+variable "s3_origin_config" {
   default     = []
   description = "Configuration for the s3 origin config to be used in dynamic block."
   type        = list(map(string))
@@ -62,4 +62,15 @@ variable "viewer_certificate" {
     acm_certificate_arn            = string
     iam_certificate_id             = string
   })
+}
+
+variable "default_cache_behavior" {
+  default = {
+    allowed_methods = ["GET", "HEAD", "OPTIONS"]
+    min_ttl         = 0
+    default_ttl     = 3600
+    max_ttl         = 86400
+  }
+  description = "Default Cache Behviors to be used in dynamic block."
+  type        = any
 }

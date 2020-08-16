@@ -9,11 +9,14 @@ resource "aws_cloudfront_origin_access_identity" "this" {
 
 resource "aws_cloudfront_distribution" "this" {
 
-  enabled = var.enabled
+  enabled         = var.enabled
+  price_class     = var.price_class
+  is_ipv6_enabled = var.is_ipv6_enabled
+  comment         = var.comment
 
   dynamic "origin" {
 
-    for_each = [for i in var.dynamic_s3_origin_config : {
+    for_each = [for i in var.s3_origin_config : {
       name          = i.domain_name
       id            = lookup(i, "origin_id", local.origin_id)
       identity      = lookup(i, "origin_access_identity", null)
@@ -45,29 +48,31 @@ resource "aws_cloudfront_distribution" "this" {
     }
   }
 
-  is_ipv6_enabled = var.is_ipv6_enabled
-  comment         = var.comment
+  dynamic "default_cache_behavior" {
+    iterator = i
+    for_each = var.default_cache_behavior == null ? [] : [var.default_cache_behavior]
 
-  default_cache_behavior {
-    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = local.origin_id
+    content {
+      allowed_methods  = lookup(i.value, "allowed_methods", ["GET", "HEAD", "OPTIONS"])
+      cached_methods   = lookup(i.value, "cached_methods", ["GET", "HEAD"])
+      target_origin_id = lookup(i.value, "target_origin_id", local.origin_id)
+      compress         = lookup(i.value, "compress", null)
 
-    forwarded_values {
-      query_string = false
-
-      cookies {
-        forward = "none"
+      forwarded_values {
+        query_string = lookup(i.value, "query_string", false)
+        cookies {
+          forward = lookup(i.value, "cookies_forward", "none")
+        }
+        headers = lookup(i.value, "headers", null)
       }
+
+      viewer_protocol_policy = lookup(i.value, "viewer_protocol_policy", "allow-all")
+
+      min_ttl     = lookup(i.value, "min_ttl", 0)
+      default_ttl = lookup(i.value, "default_ttl", 3600)
+      max_ttl     = lookup(i.value, "max_ttl", 86400)
     }
-
-    viewer_protocol_policy = "allow-all"
-    min_ttl                = 0
-    default_ttl            = 3600
-    max_ttl                = 86400
   }
-
-  price_class = var.price_class
 
   dynamic "viewer_certificate" {
 
