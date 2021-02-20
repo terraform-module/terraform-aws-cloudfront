@@ -65,14 +65,25 @@ module cloudfront {
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.12.6, < 0.14 |
-| aws | >= 2.67, < 4.0 |
+| terraform | >= 0.12.6 |
+| aws | >= 2.67 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | >= 2.67, < 4.0 |
+| aws | >= 2.67 |
+
+## Modules
+
+No Modules.
+
+## Resources
+
+| Name |
+|------|
+| [aws_cloudfront_distribution](https://registry.terraform.io/providers/hashicorp/aws/2.67/docs/resources/cloudfront_distribution) |
+| [aws_cloudfront_origin_access_identity](https://registry.terraform.io/providers/hashicorp/aws/2.67/docs/resources/cloudfront_origin_access_identity) |
 
 ## Inputs
 
@@ -101,7 +112,6 @@ module cloudfront {
 | cf\_hosted\_zone\_id | CloudFront Route 53 zone ID |
 | cf\_id | ID of AWS CloudFront distribution |
 | cf\_status | Current status of the distribution |
-
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Commands
