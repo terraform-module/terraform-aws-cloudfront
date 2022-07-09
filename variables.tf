@@ -10,6 +10,21 @@ variable "enabled" {
   type        = bool
 }
 
+variable "aliases" {
+  description = "Extra CNAMEs (alternate domain names), if any, for this distribution."
+  type        = list(string)
+  default     = null
+}
+
+variable "viewer_certificate" {
+  description = "The SSL configuration for this distribution"
+  type        = any
+  default = {
+    cloudfront_default_certificate = true
+    minimum_protocol_version       = "TLSv1"
+  }
+}
+
 variable "comment" {
   default     = "Managed by Terraform"
   description = "Any comments you want to include about the distribution."
@@ -44,24 +59,6 @@ variable "geo_restrictions" {
     locations        = list(string)
     restriction_type = string
   }))
-}
-
-variable "viewer_certificate" {
-  default = {
-    cloudfront_default_certificate = true
-    minimum_protocol_version       = "TLSv1"
-    ssl_support_method             = null
-    acm_certificate_arn            = null
-    iam_certificate_id             = null
-  }
-  description = "The SSL configuration for this distribution (maximum one)."
-  type = object({
-    cloudfront_default_certificate = bool
-    minimum_protocol_version       = string
-    ssl_support_method             = string
-    acm_certificate_arn            = string
-    iam_certificate_id             = string
-  })
 }
 
 variable "default_cache_behavior" {
