@@ -1,7 +1,7 @@
 variable "tags" {
   default     = {}
   description = "A mapping of tags to assign to the object."
-  type        = map
+  type        = map(any)
 }
 
 variable "enabled" {

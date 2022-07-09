@@ -65,53 +65,52 @@ module cloudfront {
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.12.6 |
-| aws | >= 2.67 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | >= 2.67 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
 
 ## Modules
 
-No Modules.
+No modules.
 
 ## Resources
 
-| Name |
-|------|
-| [aws_cloudfront_distribution](https://registry.terraform.io/providers/hashicorp/aws/2.67/docs/resources/cloudfront_distribution) |
-| [aws_cloudfront_origin_access_identity](https://registry.terraform.io/providers/hashicorp/aws/2.67/docs/resources/cloudfront_origin_access_identity) |
+| Name | Type |
+|------|------|
+| [aws_cloudfront_distribution.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution) | resource |
+| [aws_cloudfront_origin_access_identity.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_origin_access_identity) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| comment | Any comments you want to include about the distribution. | `string` | `"Managed by Terraform"` | no |
-| default\_cache\_behavior | Default Cache Behviors to be used in dynamic block. | `any` | <pre>{<br>  "allowed_methods": [<br>    "GET",<br>    "HEAD",<br>    "OPTIONS"<br>  ],<br>  "default_ttl": 3600,<br>  "max_ttl": 86400,<br>  "min_ttl": 0<br>}</pre> | no |
-| enabled | Set to false to prevent the module from creating any resources. | `bool` | `"true"` | no |
-| geo\_restrictions | The method that you want to use to restrict distribution of your content by country. | <pre>list(object({<br>    locations        = list(string)<br>    restriction_type = string<br>  }))</pre> | <pre>[<br>  {<br>    "locations": [],<br>    "restriction_type": "none"<br>  }<br>]</pre> | no |
-| is\_ipv6\_enabled | State of CloudFront IPv6 | `bool` | `"false"` | no |
-| price\_class | The price class for this distribution. Values: `PriceClass_All`, `PriceClass_200`, `PriceClass_100`. | `string` | `"PriceClass_100"` | no |
-| s3\_origin\_config | Configuration for the s3 origin config to be used in dynamic block. | `list(map(string))` | `[]` | no |
-| tags | A mapping of tags to assign to the object. | `map` | `{}` | no |
-| viewer\_certificate | The SSL configuration for this distribution (maximum one). | <pre>object({<br>    cloudfront_default_certificate = bool<br>    minimum_protocol_version       = string<br>    ssl_support_method             = string<br>    acm_certificate_arn            = string<br>    iam_certificate_id             = string<br>  })</pre> | <pre>{<br>  "acm_certificate_arn": null,<br>  "cloudfront_default_certificate": true,<br>  "iam_certificate_id": null,<br>  "minimum_protocol_version": "TLSv1",<br>  "ssl_support_method": null<br>}</pre> | no |
+| <a name="input_comment"></a> [comment](#input\_comment) | Any comments you want to include about the distribution. | `string` | `"Managed by Terraform"` | no |
+| <a name="input_default_cache_behavior"></a> [default\_cache\_behavior](#input\_default\_cache\_behavior) | Default Cache Behviors to be used in dynamic block. | `any` | <pre>{<br>  "allowed_methods": [<br>    "GET",<br>    "HEAD",<br>    "OPTIONS"<br>  ],<br>  "default_ttl": 3600,<br>  "max_ttl": 86400,<br>  "min_ttl": 0<br>}</pre> | no |
+| <a name="input_enabled"></a> [enabled](#input\_enabled) | Set to false to prevent the module from creating any resources. | `bool` | `"true"` | no |
+| <a name="input_geo_restrictions"></a> [geo\_restrictions](#input\_geo\_restrictions) | The method that you want to use to restrict distribution of your content by country. | <pre>list(object({<br>    locations        = list(string)<br>    restriction_type = string<br>  }))</pre> | <pre>[<br>  {<br>    "locations": [],<br>    "restriction_type": "none"<br>  }<br>]</pre> | no |
+| <a name="input_is_ipv6_enabled"></a> [is\_ipv6\_enabled](#input\_is\_ipv6\_enabled) | State of CloudFront IPv6 | `bool` | `"false"` | no |
+| <a name="input_price_class"></a> [price\_class](#input\_price\_class) | The price class for this distribution. Values: `PriceClass_All`, `PriceClass_200`, `PriceClass_100`. | `string` | `"PriceClass_100"` | no |
+| <a name="input_s3_origin_config"></a> [s3\_origin\_config](#input\_s3\_origin\_config) | Configuration for the s3 origin config to be used in dynamic block. | `list(map(string))` | `[]` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | A mapping of tags to assign to the object. | `map(any)` | `{}` | no |
+| <a name="input_viewer_certificate"></a> [viewer\_certificate](#input\_viewer\_certificate) | The SSL configuration for this distribution (maximum one). | <pre>object({<br>    cloudfront_default_certificate = bool<br>    minimum_protocol_version       = string<br>    ssl_support_method             = string<br>    acm_certificate_arn            = string<br>    iam_certificate_id             = string<br>  })</pre> | <pre>{<br>  "acm_certificate_arn": null,<br>  "cloudfront_default_certificate": true,<br>  "iam_certificate_id": null,<br>  "minimum_protocol_version": "TLSv1",<br>  "ssl_support_method": null<br>}</pre> | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| ai\_iam\_arn | Access identity pre-generated ARN for use in S3 bucket policies |
-| ai\_id | Access identity identifier for the distribution.  For example: EDFDVBD632BHDS5 |
-| ai\_path | Access identity shortcut to the full path for the origin access identity to use in CloudFron |
-| cf\_arn | ARN of AWS CloudFront distribution |
-| cf\_domain\_name | Domain name corresponding to the distribution |
-| cf\_etag | Current version of the distribution's information |
-| cf\_hosted\_zone\_id | CloudFront Route 53 zone ID |
-| cf\_id | ID of AWS CloudFront distribution |
-| cf\_status | Current status of the distribution |
+| <a name="output_ai_iam_arn"></a> [ai\_iam\_arn](#output\_ai\_iam\_arn) | Access identity pre-generated ARN for use in S3 bucket policies |
+| <a name="output_ai_id"></a> [ai\_id](#output\_ai\_id) | Access identity identifier for the distribution.  For example: EDFDVBD632BHDS5 |
+| <a name="output_ai_path"></a> [ai\_path](#output\_ai\_path) | Access identity shortcut to the full path for the origin access identity to use in CloudFron |
+| <a name="output_cf_arn"></a> [cf\_arn](#output\_cf\_arn) | ARN of AWS CloudFront distribution |
+| <a name="output_cf_domain_name"></a> [cf\_domain\_name](#output\_cf\_domain\_name) | Domain name corresponding to the distribution |
+| <a name="output_cf_etag"></a> [cf\_etag](#output\_cf\_etag) | Current version of the distribution's information |
+| <a name="output_cf_hosted_zone_id"></a> [cf\_hosted\_zone\_id](#output\_cf\_hosted\_zone\_id) | CloudFront Route 53 zone ID |
+| <a name="output_cf_id"></a> [cf\_id](#output\_cf\_id) | ID of AWS CloudFront distribution |
+| <a name="output_cf_status"></a> [cf\_status](#output\_cf\_status) | Current status of the distribution |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Commands
