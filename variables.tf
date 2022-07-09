@@ -74,3 +74,9 @@ variable "default_cache_behavior" {
   description = "Default Cache Behviors to be used in dynamic block."
   type        = any
 }
+
+variable "default_root_object" {
+  description = "The object that you want CloudFront to return (for example, index.html) when an end user requests the root URL."
+  type        = string
+  default     = null
+}

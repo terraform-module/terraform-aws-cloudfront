@@ -1,6 +1,7 @@
 locals {
-  origin_access_identity = aws_cloudfront_origin_access_identity.this.cloudfront_access_identity_path
-  origin_id              = aws_cloudfront_origin_access_identity.this.id
+  origin_access_identity  = aws_cloudfront_origin_access_identity.this.cloudfront_access_identity_path
+  origin_id               = aws_cloudfront_origin_access_identity.this.id
+  response_headers_policy = var.default_cache_behavior != null && try(var.default_cache_behavior["response_headers_policy_id"], null) != null
 }
 
 resource "aws_cloudfront_origin_access_identity" "this" {
@@ -13,6 +14,8 @@ resource "aws_cloudfront_distribution" "this" {
   price_class     = var.price_class
   is_ipv6_enabled = var.is_ipv6_enabled
   comment         = var.comment
+
+  default_root_object = var.default_root_object
 
   dynamic "origin" {
 
@@ -50,13 +53,15 @@ resource "aws_cloudfront_distribution" "this" {
 
   dynamic "default_cache_behavior" {
     iterator = i
-    for_each = var.default_cache_behavior == null ? [] : [var.default_cache_behavior]
+    for_each = [var.default_cache_behavior]
 
     content {
       allowed_methods  = lookup(i.value, "allowed_methods", ["GET", "HEAD", "OPTIONS"])
       cached_methods   = lookup(i.value, "cached_methods", ["GET", "HEAD"])
       target_origin_id = lookup(i.value, "target_origin_id", local.origin_id)
       compress         = lookup(i.value, "compress", null)
+
+      response_headers_policy_id = join("", data.aws_cloudfront_response_headers_policy.this.*.id)
 
       forwarded_values {
         query_string = lookup(i.value, "query_string", false)
