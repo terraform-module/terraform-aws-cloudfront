@@ -14,6 +14,8 @@ resource "aws_cloudfront_distribution" "this" {
   is_ipv6_enabled = var.is_ipv6_enabled
   comment         = var.comment
 
+  default_root_object = var.default_root_object
+
   dynamic "origin" {
 
     for_each = [for i in var.s3_origin_config : {
@@ -50,13 +52,15 @@ resource "aws_cloudfront_distribution" "this" {
 
   dynamic "default_cache_behavior" {
     iterator = i
-    for_each = var.default_cache_behavior == null ? [] : [var.default_cache_behavior]
+    for_each = [var.default_cache_behavior]
 
     content {
       allowed_methods  = lookup(i.value, "allowed_methods", ["GET", "HEAD", "OPTIONS"])
       cached_methods   = lookup(i.value, "cached_methods", ["GET", "HEAD"])
       target_origin_id = lookup(i.value, "target_origin_id", local.origin_id)
       compress         = lookup(i.value, "compress", null)
+
+      response_headers_policy_id = lookup(i.value, "response_headers_policy_id", null)
 
       forwarded_values {
         query_string = lookup(i.value, "query_string", false)

@@ -90,6 +90,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_comment"></a> [comment](#input\_comment) | Any comments you want to include about the distribution. | `string` | `"Managed by Terraform"` | no |
 | <a name="input_default_cache_behavior"></a> [default\_cache\_behavior](#input\_default\_cache\_behavior) | Default Cache Behviors to be used in dynamic block. | `any` | <pre>{<br>  "allowed_methods": [<br>    "GET",<br>    "HEAD",<br>    "OPTIONS"<br>  ],<br>  "default_ttl": 3600,<br>  "max_ttl": 86400,<br>  "min_ttl": 0<br>}</pre> | no |
+| <a name="input_default_root_object"></a> [default\_root\_object](#input\_default\_root\_object) | The object that you want CloudFront to return (for example, index.html) when an end user requests the root URL. | `string` | `null` | no |
 | <a name="input_enabled"></a> [enabled](#input\_enabled) | Set to false to prevent the module from creating any resources. | `bool` | `"true"` | no |
 | <a name="input_geo_restrictions"></a> [geo\_restrictions](#input\_geo\_restrictions) | The method that you want to use to restrict distribution of your content by country. | <pre>list(object({<br>    locations        = list(string)<br>    restriction_type = string<br>  }))</pre> | <pre>[<br>  {<br>    "locations": [],<br>    "restriction_type": "none"<br>  }<br>]</pre> | no |
 | <a name="input_is_ipv6_enabled"></a> [is\_ipv6\_enabled](#input\_is\_ipv6\_enabled) | State of CloudFront IPv6 | `bool` | `"false"` | no |
