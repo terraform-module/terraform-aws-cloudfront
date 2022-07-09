@@ -22,7 +22,6 @@ Terraform Module that implements a CloudFront Distribution (CDN) for a custom or
 
 ## Documentation
 
-- [TFLint Rules](https://github.com/terraform-linters/tflint/tree/master/docs/rules)
 - [AWS CDN Price classes](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/PriceClass.html)
 - [AWS CDN Origins](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/DownloadDistS3AndCustomOrigins.html)
 
@@ -30,12 +29,6 @@ Terraform Module that implements a CloudFront Distribution (CDN) for a custom or
 
 - [Cloudfront Distribution](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution)
 - [Origin Access Identity](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_origin_access_identity)
-
-### References
-
-- [CDN with S3](https://github.com/cloudposse/terraform-aws-cloudfront-s3-cdn)
-- [CDN jmg](https://github.com/jmgreg31/terraform-aws-cloudfront)
-- [CDN Cloudposse](https://github.com/cloudposse/terraform-aws-cloudfront-cdn)
 
 ## Usage example
 
@@ -155,3 +148,9 @@ Currently maintained by [Ivan Katliarchuk](https://github.com/ivankatliarchuk) a
 ## Terraform Registry
 
 - [Module](https://registry.terraform.io/modules/terraform-module/todo/aws)
+
+### Resources
+
+- [CDN: with S3](https://github.com/cloudposse/terraform-aws-cloudfront-s3-cdn)
+- [CDN: jmg](https://github.com/jmgreg31/terraform-aws-cloudfront)
+- [CDN: Cloudposse](https://github.com/cloudposse/terraform-aws-cloudfront-cdn)
