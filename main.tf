@@ -1,6 +1,7 @@
 locals {
-  origin_access_identity = aws_cloudfront_origin_access_identity.this.cloudfront_access_identity_path
-  origin_id              = aws_cloudfront_origin_access_identity.this.id
+  origin_access_identity  = aws_cloudfront_origin_access_identity.this.cloudfront_access_identity_path
+  origin_id               = aws_cloudfront_origin_access_identity.this.id
+  response_headers_policy = var.default_cache_behavior != null && try(var.default_cache_behavior["response_headers_policy_id"], null) != null
 }
 
 resource "aws_cloudfront_origin_access_identity" "this" {
@@ -60,7 +61,7 @@ resource "aws_cloudfront_distribution" "this" {
       target_origin_id = lookup(i.value, "target_origin_id", local.origin_id)
       compress         = lookup(i.value, "compress", null)
 
-      response_headers_policy_id = lookup(i.value, "response_headers_policy_id", null)
+      response_headers_policy_id = join("", data.aws_cloudfront_response_headers_policy.this.*.id)
 
       forwarded_values {
         query_string = lookup(i.value, "query_string", false)
