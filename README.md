@@ -41,10 +41,12 @@ Terraform Module that implements a CloudFront Distribution (CDN) for a custom or
 
 IMPORTANT: The master branch is used in source just as an example. In your code, do not pin to master because there may be breaking changes between releases. Instead pin to the release tag (e.g. ?ref=tags/x.y.z) of one of our [latest releases](https://github.com/terraform-module/terraform-aws-cloudfront/releases).
 
+See `examples` directory for working examples to reference:
+
 ```hcl
 module cloudfront {
   source  = "terraform-module/cloudfront/aws"
-  version = "0.12.2"
+  version = "~> 1"
 
   tags = { Environment = "dev" }
   comment = "dev"
@@ -89,6 +91,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_aliases"></a> [aliases](#input\_aliases) | Extra CNAMEs (alternate domain names), if any, for this distribution. | `list(string)` | `null` | no |
 | <a name="input_comment"></a> [comment](#input\_comment) | Any comments you want to include about the distribution. | `string` | `"Managed by Terraform"` | no |
 | <a name="input_default_cache_behavior"></a> [default\_cache\_behavior](#input\_default\_cache\_behavior) | Default Cache Behviors to be used in dynamic block. | `any` | <pre>{<br>  "allowed_methods": [<br>    "GET",<br>    "HEAD",<br>    "OPTIONS"<br>  ],<br>  "default_ttl": 3600,<br>  "max_ttl": 86400,<br>  "min_ttl": 0<br>}</pre> | no |
 | <a name="input_default_root_object"></a> [default\_root\_object](#input\_default\_root\_object) | The object that you want CloudFront to return (for example, index.html) when an end user requests the root URL. | `string` | `null` | no |
@@ -98,7 +101,7 @@ No modules.
 | <a name="input_price_class"></a> [price\_class](#input\_price\_class) | The price class for this distribution. Values: `PriceClass_All`, `PriceClass_200`, `PriceClass_100`. | `string` | `"PriceClass_100"` | no |
 | <a name="input_s3_origin_config"></a> [s3\_origin\_config](#input\_s3\_origin\_config) | Configuration for the s3 origin config to be used in dynamic block. | `list(map(string))` | `[]` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A mapping of tags to assign to the object. | `map(any)` | `{}` | no |
-| <a name="input_viewer_certificate"></a> [viewer\_certificate](#input\_viewer\_certificate) | The SSL configuration for this distribution (maximum one). | <pre>object({<br>    cloudfront_default_certificate = bool<br>    minimum_protocol_version       = string<br>    ssl_support_method             = string<br>    acm_certificate_arn            = string<br>    iam_certificate_id             = string<br>  })</pre> | <pre>{<br>  "acm_certificate_arn": null,<br>  "cloudfront_default_certificate": true,<br>  "iam_certificate_id": null,<br>  "minimum_protocol_version": "TLSv1",<br>  "ssl_support_method": null<br>}</pre> | no |
+| <a name="input_viewer_certificate"></a> [viewer\_certificate](#input\_viewer\_certificate) | The SSL configuration for this distribution | `any` | <pre>{<br>  "cloudfront_default_certificate": true,<br>  "minimum_protocol_version": "TLSv1"<br>}</pre> | no |
 
 ## Outputs
 
@@ -119,10 +122,10 @@ No modules.
 
 <!-- START makefile-doc -->
 ```
-$ make help 
+$ make help
 hooks                          Commit hooks setup
 validate                       Validate with pre-commit hooks
-changelog                      Update changelog 
+changelog                      Update changelog
 ```
 <!-- END makefile-doc -->
 
