@@ -2,9 +2,10 @@
 
 Terraform Module that implements a CloudFront Distribution (CDN) for a custom origin (e.g. website or video streaming)
 
-![](https://github.com/terraform-module/terraform-aws-cloudfront/workflows/release/badge.svg)
-![](https://github.com/terraform-module/terraform-aws-cloudfront/workflows/commit-check/badge.svg)
-![](https://github.com/terraform-module/terraform-aws-cloudfront/workflows/labeler/badge.svg)
+[![linter](https://github.com/terraform-module/terraform-aws-cloudfront/actions/workflows/linter.yml/badge.svg)](https://github.com/terraform-module/terraform-aws-cloudfront/actions/workflows/linter.yml)
+[![release.draft](https://github.com/terraform-module/terraform-aws-cloudfront/actions/workflows/release.draft.yml/badge.svg)](https://github.com/terraform-module/terraform-aws-cloudfront/actions/workflows/release.draft.yml)
+[![commit-check](https://github.com/terraform-module/terraform-aws-cloudfront/actions/workflows/main.yaml/badge.svg)](https://github.com/terraform-module/terraform-aws-cloudfront/actions/workflows/main.yaml)
+
 
 [![](https://img.shields.io/github/license/terraform-module/terraform-aws-cloudfront)](https://github.com/terraform-module/terraform-aws-cloudfront)
 ![](https://img.shields.io/github/v/tag/terraform-module/terraform-aws-cloudfront)
